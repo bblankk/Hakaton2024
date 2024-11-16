@@ -1,0 +1,60 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ProblemManager : MonoBehaviour
+{
+    public Text problemText;              
+    public GameObject[] answerItems;      
+    public string[] problems;             
+    public string[] correctAnswers;       
+    public PlayerController player1;      
+    public PlayerController player2;      
+
+    private int currentProblemIndex = 0;  
+
+    void Start()
+    {
+        UpdateProblem();
+    }
+
+  
+    public void OnItemCollected(GameObject collectedItem, string playerName)
+    {
+       
+        if (collectedItem.name == correctAnswers[currentProblemIndex])
+        {
+            
+            if (playerName == "Player1")
+            {
+                player1.AddScore(1);  
+            }
+            else if (playerName == "Player2")
+            {
+                player2.AddScore(1);  
+            }
+
+           
+            if (currentProblemIndex < problems.Length - 1)
+            {
+                currentProblemIndex++;
+                UpdateProblem();
+            }
+        }
+       
+    }
+
+   
+    private void UpdateProblem()
+    {
+        if (problemText != null && currentProblemIndex < problems.Length)
+        {
+            problemText.text = problems[currentProblemIndex];
+            UpdateAnswerItems();
+        }
+    }
+
+    private void UpdateAnswerItems()
+    {
+        
+    }
+}
